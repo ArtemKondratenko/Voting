@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="columns is-centered is-vcentered is-multiline">
+  <div class="column is-half">
+    <div class="box has-text-centered">
+      <h1>Регистрация</h1>
+      <form method="POST" action="/register">
+        <div class="field is-centered is-flex is-justify-content-center">
+          <div class="control">
+            <input class="input" type="text" name="name" placeholder="Введите имя">
+          </div>
+        </div>
+        <div class="field is-centered is-flex is-justify-content-center">
+          <div class="control">
+            <input class="input" type="password" name="password" placeholder="Введите пароль">
+          </div>
+        </div>
+        <div class="field is-centered is-flex is-justify-content-center">
+          <div class="control">
+            <div class="buttons is-centered is-flex">
+              <button type="submit" class="button">Зарегистрироваться</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

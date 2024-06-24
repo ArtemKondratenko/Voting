@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    >
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        flex-grow: 0;
+        text-align: center;
+        font-family: Arial, sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      main {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .header-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .header-buttons a.button {
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .notifications {
+        position: fixed;
+        bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/">Голосование.ру</a>
+      <div class="header-buttons">
+        {% if current_user.is_authenticated %}
+          <a href="/create_vote" class="button is-primary">Создать голосование</a>
+          <a href="/logout" class="button is-danger">Выйти из аккаунта</a>
+        {% else %}
+          <a href="/register" class="button is-primary">Регистрация</a>
+          <a href="/login" class="button is-link">Войти в аккаунт</a>
+        {% endif %}
+      </div>
+    </header>
+    <main>
+      <div>{% block main %}{% endblock %}</div>
+    </main>
+    <div class="notifications">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+        {% if category == "error" %}
+          <div class="notification is-danger">
+            <button class="delete"></button>
+            {{message}}
+          </div>
+        {% elif category == "success" %}
+          <div class="notification is-success">
+            <button class="delete"></button>
+            {{message}}
+          </div>
+        {% endif %}
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
+  </body>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+        const $notification = $delete.parentNode;
+
+        $delete.addEventListener('click', () => {
+          $notification.parentNode.removeChild($notification);
+        });
+      });
+    });
+  </script>
+</html>

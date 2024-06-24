@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="columns is-centered is-vcentered is-multiline">
+  <div class="column is-half">
+    <div class="box has-text-centered">
+      <h1>Страница пользователя {{current_user.name}}</h1>
+      <div class="container">
+        <h2>Мои голосования:</h2>
+        <ul>
+          {% for voting in current_user.votings %}
+          <h3>{{ voting.name }}</h3>
+          <li>{{ voting.discription }}</li>
+          {% endfor %}
+        </ul>
+        <div class="field is-centered is-flex is-justify-content-center">
+          <div class="control">
+            <a href="/create_vote" class="button">Создать голосование</a>
+          </div>
+          <div class="control">
+            <a href="/logout" class="button">Выйти</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

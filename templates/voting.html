@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="columns is-centered is-vcentered is-multiline">
+  <div class="column is-half">
+    <div class="box has-text-centered">
+      <h1>Создание голосования</h1>
+      <form method="POST" action="/voting">
+        <div class="field is-centered is-flex is-justify-content-center">
+          <div class="control">
+            <input type="text" name="name" class="input" placeholder="Введите название">
+          </div>
+        </div>
+        <div class="field is-centered is-flex is-justify-content-center">
+          <div class="control">
+            <label>Описание</label>
+            <textarea class="textarea" name="description"></textarea>
+          </div>
+        </div>
+        <div class="field is-centered is-flex is-justify-content-center">
+          <div class="control">
+            <button type="submit" class="button">Создать</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

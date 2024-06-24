@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="columns is-centered is-vcentered is-multiline">
+  <div class="column is-half">
+    <div class="box has-text-centered">
+      <div class="container">
+        <h2 class="title is-4">Лента голосований:</h2>
+        <ul>
+          {% for voting in votings|reverse %}
+          <li style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #ccc;">
+            
+            <h2 class="subtitle is-6">Автор: {{ voting.user.name }}</h2>
+            <h3 class="title is-5">Название голосования: {{ voting.name }}</h3>
+            <p class="content">{{ voting.description }}</p>
+            
+            {% set num_votes_for, num_votes_aganist = voting.get_vote_count() %}
+            
+            <p>Голосов "За": {{ num_votes_for }}"</p>
+            <p>Голосов "Против": {{ num_votes_aganist }}"</p>
+
+            <form method="POST">
+              <input type="hidden" name="voting" value="{{voting.id}}">
+              {% if current_user.voice_for(voting.id) %}
+                {% if current_user.voice_for(voting.id).voice_status %}
+                  <div class="notification is-success">
+                    Вы проголосовали "За"
+                  </div>
+                {% else %}
+                  <div class="notification is-danger">
+                    Вы проголосовали "Против"
+                  </div>
+                {% endif %}
+              {% else %}
+                <div class="field is-grouped is-grouped-centered">
+                  <div class="control">
+                    <button type="submit" formaction="/vote/yes" class="button is-success">За</button>
+                  </div>
+                  <div class="control">
+                    <button type="submit" formaction="/vote/no" class="button is-danger">Против</button>
+                  </div>
+                </div>
+              {% endif %}
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+     </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
